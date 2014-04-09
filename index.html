@@ -1,65 +1,110 @@
-<html>
-<head>
-  <link rel="stylesheet" href="microphone.css">
-</head>
-<body style="text-align: center;">
-  <div id="microphone"></div>
-  <pre id="result"></pre>
-  <div id="info"></div>
-  <script src="microphone.js"></script>
+<html lang="en">
+    <head>
+		<meta charset=utf-8 />
+		<title>CM Trail App</title>
+		<link rel='stylesheet' href="css/style.css"/>
+		<link rel="stylesheet" href="microphone.css"/>
+    </head>
+    <body class="impress-not-supported">
 
-  <script>
-    var mic = new Wit.Microphone(document.getElementById("microphone"));
-    var info = function (msg) {
-      document.getElementById("info").innerHTML = msg;
-    };
-    mic.onready = function () {
-      info("Microphone is ready to record");
-    };
-    mic.onaudiostart = function () {
-      info("Recording started");
-    };
-    mic.onaudioend = function () {
-      info("Recording stopped, processing started");
-    };
-    mic.onerror = function (err) {
-      info("Error: " + err);
-    };
-    mic.onresult = function (intent, entities) {
-      var r = kv("intent", intent);
 
-      for (var k in entities) {
-        var e = entities[k];
 
-        if (!(e instanceof Array)) {
-          r += kv(k, e.value);
-        } else {
-          for (var i = 0; i < e.length; i++) {
-            r += kv(k, e[i].value);
-          }
-        }
-      }
+        <div id="impress">
+		
+            <div id="start" class="step" >
+                <p>Welcome to the Cleveland Metroparks Trail Application!</p>
+				<div id="microphone"></div>
+				<!--<h6>
+					I want to go for a bike ride</br>
+					I want to go for a hike</br>
+					I want to go fishing.</br>
+					How do I get to the bathroom?</br>
+					I have to go potty!</br>
+				</h6>-->
+				
+				<img id="robot_body" src="images/robot_body.png" />
+                <img id="robot_head" src="images/robot_head.png" />
+                <img id="robot_arm" src="images/robot_arm.png" />
+                
+               <!-- <p class='hint_text'>Use the arrow keys to navigate</p>-->
+            </div>
+			
+			
+            
+            <div id="slide1" class="step" data-x="700" data-rotate-y="-45">
+				<pre id="result"></pre>
+				<div id="info"></div>
+                <!--<img src="images/map.png" height="600" width="500" />-->	
+                <!--<iframe src="http://maps.clevelandmetroparks.com/desktop/map" height="600px" width="500px"></iframe>-->
+            </div>
+			
+			
 
-      document.getElementById("result").innerHTML = r;
-    };
-    mic.connect("YI5IHCDIQG2VDQEWC3E5FNWOEZNNUHCV");
-    // mic.start();
-    // mic.stop();
+            <div id="slide2" class="step" data-x="-700" data-rotate-y="45">
+                <img src="images/directions.png" height="600" width="500" />	
+            </div>
+   
 
-    function kv (k, v) {
-      if (toString.call(v) !== "[object String]") {
-        v = JSON.stringify(v);
-      }
-      return k + "=" + v + "\n";
-    }
-  </script>
-</br>
-<h6>
-I want to go for a bike ride</br>
-I want to go for a hike</br>
-I want to go fishing.</br>
-How do I get to the bathroom?</br>
-I have to go potty!</br>
-</h6>
-</body>
+        </div>
+
+        <div class="fallback-message">
+            <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+            <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+        </div>
+
+
+        <script type="text/javascript" src="js/impress.js"></script>
+        <script type="text/javascript">impress().init();</script>
+		<script src="microphone.js"></script>
+		<script>
+			var mic = new Wit.Microphone(document.getElementById("microphone"));
+			var info = function (msg) {
+			  document.getElementById("info").innerHTML = msg;
+			};
+			mic.onready = function () {
+			  info("Microphone is ready to record");
+			};
+			mic.onaudiostart = function () {
+			  info("Recording started");
+			};
+			mic.onaudioend = function () {
+			  info("Recording stopped, processing started");
+			};
+			mic.onerror = function (err) {
+			  info("Error: " + err);
+			};
+			mic.onresult = function (intent, entities) {
+			  var r = kv("intent", intent);
+
+			  for (var k in entities) {
+				var e = entities[k];
+
+				if (!(e instanceof Array)) {
+				  r += kv(k, e.value);
+				} else {
+				  for (var i = 0; i < e.length; i++) {
+					r += kv(k, e[i].value);
+				  }
+				}
+			  }
+
+			  document.getElementById("result").innerHTML = r;
+			};
+			mic.connect("YI5IHCDIQG2VDQEWC3E5FNWOEZNNUHCV");
+			// mic.start();
+			// mic.stop();
+
+			function kv (k, v) {
+			  if (toString.call(v) !== "[object String]") {
+				v = JSON.stringify(v);
+			  }
+			  return k + "=" + v + "\n";
+			}
+		</script>
+
+
+
+    </body>
 </html>
+
+
